@@ -31,3 +31,5 @@ https://www.figma.com/file/iE2H7tUDooAzrXFpNd0ReS/TP_POE?node-id=0%3A1
 
 7. <u>En bonus</u> : Le client aimerait beaucoup disposer d'une maquette réelle de son application
 https://www.figma.com/file/IluEQkJfRB3UpRWFPBOH5a/MaquetteWeb?node-id=2%3A96
+
+https://www.figma.com/file/HjCAsPbx6p5GsujwBWOGyK/TP_POE_MaquetteMobile?node-id=0%3A1
