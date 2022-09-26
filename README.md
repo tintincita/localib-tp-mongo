@@ -1,6 +1,6 @@
 # Practical Exercise on Full Stack Development
 Following instructions (in French) on:
-![instructions](./TP_POE/exercice.md)
+[instructions](./TP_POE/exercice.md)
 
 ## STACK
 MERN
