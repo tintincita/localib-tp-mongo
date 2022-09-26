@@ -4,4 +4,4 @@ Following instructions (in French) on:
 
 ## STACK
 MERN
-(Mongo, Ecxpress, React, Node)
+(Mongo, Express, React, Node)
