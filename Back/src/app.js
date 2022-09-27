@@ -32,9 +32,9 @@ mongoose
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/vehicule", vehiculeRouter);
-app.use("/api/client", clientRouter);
-app.use("/api/location", locationRouter);
+app.use("/api/vehicules", vehiculeRouter);
+app.use("/api/clients", clientRouter);
+app.use("/api/locations", locationRouter);
 
 app.use(middleware.requestLogger);
 app.use(middleware.unknownEndpoint);

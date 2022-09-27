@@ -15,9 +15,9 @@ module.exports.getVehiculeByID = async (request, response) => {
 };
 
 module.exports.createVehicule = async (request, response) => {
-  const {marque, model, immatriculation, disponibility, etat, prixJournee, type} = request.body;
-
-  const newVehicle = new Vehicle ({
+  const { marque, model, immatriculation, disponibility, etat, prixJournee, type } = request.body;
+  console.log("yoohoo");
+  const newVehicule = new Vehicule({
     marque: marque,
     model: model,
     immatriculation: immatriculation,
@@ -26,19 +26,20 @@ module.exports.createVehicule = async (request, response) => {
     prixJournee: prixJournee,
     type: type,
   })
+  console.log(newVehicule);
 
-  const savedVehicle = newVehicle.save();
+  const savedVehicule = await newVehicule.save();
+  console.log(savedVehicule);
+  savedVehicule
+    ? response.json(savedVehicule)
+    : response.status(400).end()
 
-  savedVehicle
-  ? response.json(savedVehicle)
-  : response.status(400).end()
-  
 };
 
 module.exports.updateVehiculeByID = async (request, response) => {
-  const {marque, model, immatriculation, disponibility, etat, prixJournee, type} = request.body;
-  
-  const vehicleNewInfo = new Vehicle ({
+  const { marque, model, immatriculation, disponibility, etat, prixJournee, type } = request.body;
+
+  const vehiculeNewInfo = {
     marque: marque,
     model: model,
     immatriculation: immatriculation,
@@ -46,19 +47,19 @@ module.exports.updateVehiculeByID = async (request, response) => {
     etat: etat,
     prixJournee: prixJournee,
     type: type,
-  })
-  
-  const updatedVehicle = await Vehicule.findByIdAndUpdate(request.params.id, vehicleNewInfo, {new:true})
-  
-  updatedVehicle
-  ? response.json(updatedVehicle)
-  : response.status(400).end()
+  }
+
+  const updatedVehicule = await Vehicule.findByIdAndUpdate(request.params.id, vehiculeNewInfo, { new: true })
+
+  updatedVehicule
+    ? response.json(updatedVehicule)
+    : response.status(400).end()
 };
 
 module.exports.deleteVehiculeByID = async (request, response) => {
-  const target= request.params.id;
-  const vehiculeToDelete = await Vehicle.findById(target);
-  if (vehicleToDelete){
+  const target = request.params.id;
+  const vehiculeToDelete = await Vehicule.findById(target);
+  if (vehiculeToDelete) {
     await Vehicule.findByIdAndDelete(target)
     response.status(204).send('Vehicule deleted: ${vehiculeToDelete.immatriculation}')
   } else {
