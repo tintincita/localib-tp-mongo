@@ -1,14 +1,6 @@
 const Location = require('../models/location.model')
 const Vehicule = require('../models/vehicule.model')
 
-const daysBetweenTwoDatesInclusive = (date1, date2) => {
-    let difference = date2 - date1;
-    let totalDays = Math.ceil(difference / (1000 * 3600 * 24)) + 1;
-    console.log("difference", difference);
-    console.log("totalDays", totalDays);
-    console.log(typeof totalDays);
-    return totalDays
-}
 
 module.exports.getAllLocations = async (request, response) => {
     const locations = await Location.find({}).populate("vehicule").populate("client");
@@ -26,82 +18,71 @@ module.exports.getLocationByID = async (request, response) => {
 
 module.exports.createLocation = async (request, response) => {
     const { startDate, endDate, vehicule, client } = request.body;
-    const workingStartDate = new Date(startDate).getTime();
-    const workingEndDate = new Date(endDate).getTime();
 
-    const vehiculeToRent = await Vehicule.findById(vehicule);
+    try {
+        const vehiculeToRent = await Vehicule.findById(vehicule)
 
-    if (!vehiculeToRent) {
-        console.log('Vehicule Not Found');
-        response.status(400).end()
-    }
+        const prixTotal = checkDatesAndReturnPrixTotal(startDate, endDate, vehiculeToRent)
 
-    console.log("start:", startDate, "end: ", endDate);
-    let dateTest = new Date(startDate).getMonth()
-    console.log("startDat month", dateTest);
+        const newLocation = new Location({
+            startDate: startDate,
+            endDate: endDate,
+            prixTotal: prixTotal,
+            vehicule: vehicule,
+            client: client,
+        })
+        const savedLocation = await newLocation.save();
 
-    if (workingStartDate > workingEndDate) {
-        console.log('End Date must be on or after Start Date');
-        response.status(400).end()
-    }
+        await addLocationToVehicule(savedLocation.id, vehiculeToRent)
 
-    const prixTotal = daysBetweenTwoDatesInclusive(workingStartDate, workingEndDate) * vehiculeToRent.prixJournee;
+        response.json(savedLocation)
 
-    const newLocation = new Location({
-        startDate: startDate,
-        endDate: endDate,
-        prixTotal: prixTotal,
-        vehicule: vehicule,
-        client: client,
-    })
-
-    const savedLocation = await newLocation.save();
-
-    savedLocation
-        ? response.json(savedLocation)
-        : response.status(400).end()
-
+    } catch (err) { throw err }
 }
 
 module.exports.updateLocationByID = async (request, response) => {
     const target = request.params.id
     const { startDate, endDate, vehicule, client } = request.body;
-    let prixTotal = 0;
 
-    const oldLocation = await Location.findById(target)
-    if (!oldLocation) {
-        response.status(400).end()
-    }
+    try {
+        const oldLocation = await Location.findById(target)
+        const vehiculeID = oldLocation.vehicule.toString();
 
-    const vehiculeID = oldLocation.vehicule.toString();
-    if (vehicule && vehiculeID != vehicule) {
-        vehiculeID = vehicule
-    }
+        const datesChanged = ((startDate && (startDate != oldLocation.startDate)) || (endDate && (endDate != oldLocation.endDate)))
+        const vehiculeChanged = (vehicule && (vehiculeID != vehicule))
 
-    const vehiculeToRent = await Vehicule.findById(vehiculeID)
-    console.log(typeof vehiculeToRent.prixJournee);
+        console.log("datesChanged", datesChanged);
+        console.log("vehiculeChanged", vehiculeChanged);
 
-    if ((startDate != oldLocation.startDate) || (endDate != oldLocation.endDate) || (vehiculeID != vehicule)) {
+        if (vehiculeChanged) {
+            await removeLocationFromVehicule(vehiculeID, target);
+            await addLocationToVehicule(target, vehicule)
+            vehiculeID = vehicule;
+        }
 
-        prixTotal = daysBetweenTwoDatesInclusive(startDate, endDate) * vehiculeToRent.prixJournee;
-    } else {
-        prixTotal = oldLocation.prixTotal;
-    }
+        const vehiculeToRent = await Vehicule.findById(vehicule)
+        const prixTotal = 0
+        if (datesChanged || vehiculeChanged) {
+            startDate = (startDate | oldLocation.startDate);
+            endDate = (endDate | oldLocation.endDate);
+            prixTotal = checkDatesAndReturnPrixTotal(startDate, endDate, vehiculeToRent)
+        } else {
+            prixTotal = oldLocation.prixTotal;
+        }
 
-    const newLocation = {
-        startDate: startDate,
-        endDate: endDate,
-        prixTotal: prixTotal,
-        vehicule: vehicule,
-        client: client,
-    }
+        const newLocation = {
+            startDate: startDate,
+            endDate: endDate,
+            prixTotal: prixTotal,
+            vehicule: vehicule,
+            client: client,
+        }
+        const updatedLocation = await Location.findByIdAndUpdate(target, newLocation, { new: true })
+        response.json(updatedLocation)
 
-    const updatedLocation = await Location.findByIdAndUpdate(target, newLocation, { new: true })
-
-    updatedLocation
-        ? response.json(updatedLocation)
-        : response.status(400).end()
+    } catch (err) { throw err }
 }
+
 
 module.exports.deleteLocationByID = async (request, response) => {
     const target = request.params.id
@@ -115,4 +96,31 @@ module.exports.deleteLocationByID = async (request, response) => {
     } else {
         response.status(400).end()
     }
+}
+
+// helper functions below
+
+const daysBetweenTwoDatesInclusive = (date1, date2) => {
+    let difference = date2 - date1;
+    let totalDays = Math.ceil(difference / (1000 * 3600 * 24)) + 1;
+    return totalDays
+}
+
+const checkDatesAndReturnPrixTotal = (startDate, endDate, vehiculeToRent) => {
+    const workingStartDate = new Date(startDate).getTime();
+    const workingEndDate = new Date(endDate).getTime();
+
+    if (workingStartDate > workingEndDate) {
+        throw "End date must be on or after start date"
+    } else {
+        return daysBetweenTwoDatesInclusive(workingStartDate, workingEndDate) * vehiculeToRent.prixJournee;
+    }
+}
+
+const addLocationToVehicule = (locationID, vehiculeID) => {
+    return Vehicule.findByIdAndUpdate(vehiculeID, { $addToSet: { locations: locationID } })
+}
+
+const removeLocationFromVehicule = (locationID, vehiculeID) => {
+    return Vehicule.findByIdAndUpdate(vehiculeID, { $pull: { locations: locationID } })
 }

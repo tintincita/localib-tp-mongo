@@ -1,7 +1,7 @@
 const Vehicule = require("../models/vehicule.model");
 
 module.exports.getAllVehicules = async (request, response) => {
-  const vehicules = await Vehicule.find({});
+  const vehicules = await Vehicule.find({}).populate('locations');
   response.json(vehicules);
 };
 

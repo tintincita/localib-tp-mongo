@@ -22,6 +22,9 @@ const vehiculeSchema = mongoose.Schema({
         type: Boolean,
         required: true,
     },
+    dipoUnitl : {
+        type: Date,
+    },
     prixJournee: {
         type: Number,
         required: true,
@@ -30,7 +33,12 @@ const vehiculeSchema = mongoose.Schema({
         type: String,
         enum: ['Voiture', 'Camion', 'Utilitaire', 'Moto'],
         required: true,
+    },
+    locations :[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Location",
     }
+    ]
 })
 
 vehiculeSchema.set("toJSON", {
