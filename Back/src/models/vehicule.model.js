@@ -12,18 +12,18 @@ const vehiculeSchema = mongoose.Schema(
             type: String,
         },
         etat: {
-            type: String
-            // A, B, C, D
+            type: String,
+            enum: ['A','B','C','D'],
         },
         disponibility: {
-            type: String,
+            type: Boolean,
         },
         prixJournee: {
             type: Number,
         },
         type: {
             type: String,
-            // Voiture, Camion, Utilitaire, Moto
+            enum: ['Voiture', 'Camion', 'Utilitaire', 'Moto'],
         }
     }
 )

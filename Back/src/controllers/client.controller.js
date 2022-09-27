@@ -7,12 +7,12 @@ module.exports.getAllClients = async (request, response) => {
 
 module.exports.getClientByID = async (request, response) => {
     const client = await Client.findById(request.params.id);
-    if (client) {
-        response.json(client);
-    } else {
-        response.status(404).end()
-    }
+
+    client
+        ? response.json(client)
+        : response.status(404).end()
 }
+
 module.exports.createClient = async (request, response) => {
     const { fullName, dob, email, phone } = request.body
 
@@ -23,9 +23,39 @@ module.exports.createClient = async (request, response) => {
         phone: phone
     })
 
-    const savedCLient = await client.save();
-    response.status(201).json(savedCLient);
+    const savedCLient = await newClient.save();
+
+    savedClient
+        ? response.json(savedClient)
+        : response.status(400).end()
+
 }
 
-module.exports.updateClientByID = (request, response) => {}
-module.exports.deleteClientByID = (request, response) => {}
+module.exports.updateClientByID = async (request, response) => {
+    const { fullName, dob, email, phone } = request.body;
+
+    const client = new Client({
+        fullName: fullName,
+        dob: dob,
+        email: email,
+        phone: phone
+    })
+
+    const updatedClient = await Client.findByIdAndUpdate(request.params.id, client, { new: true })
+
+    updatedClient
+        ? response.json(updatedClient)
+        : response.status(400).end()
+}
+
+module.exports.deleteClientByID = async (request, response) => {
+    const target = request.params.id
+    const clientToDelete = await Client.findById(target)
+
+    if (clientToDelete) {
+        await Client.findByIdAndDelete(target)
+        response.status(204).send(`Client deleted : ${clientToDelete.fullName}`);
+    } else {
+        response.status(400).end()
+    }
+}
