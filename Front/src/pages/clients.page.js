@@ -1,23 +1,15 @@
-import { useState, useEffect } from "react";
-import ClientForm from "../components/form_client";
+import React, { useEffect, useState } from "react";
 
+import ClientForm from "../components/form_client";
 import ListingClients from "../components/listing_clients";
 
-const Client = ({
-  client,
-  setClient,
-  message,
-  setMessage,
-}) => {
+const Client = () => {
+
+
   return (
     <div>
       <ListingClients />
-      <ClientForm
-        client={client}
-        setClient={setClient}
-        message={message}
-        setMessage={setMessage}
-      />
+      <ClientForm />
     </div>
   );
 };

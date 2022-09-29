@@ -5,7 +5,10 @@ import React, { useEffect, useState } from "react";
 
 import CONFIG from "../config/config.json";
 
-function ClientForm({ client, setClient, message, setMessage }) {
+function ClientForm() {
+  const [client, setClient] = useState({});
+  const [message, setMessage] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 

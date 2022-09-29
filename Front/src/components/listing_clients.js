@@ -6,6 +6,7 @@ import CONFIG from "../config/config.json";
 
 const ListingClients = () => {
   const [records, setRecords] = useState([]);
+  
 
   useEffect(() => {
     fetch(CONFIG.api.clients)
@@ -23,7 +24,9 @@ const ListingClients = () => {
       return recordList.push(
         <tr key={record.id}>
           <td>{record.fullName}</td>
-          <td><Moment format="DD-MM-YYYY">{record.dob}</Moment></td>
+          <td>
+            <Moment format="DD-MM-YYYY">{record.dob}</Moment>
+          </td>
           <td>{record.email}</td>
           <td>{record.phone}</td>
         </tr>
@@ -42,9 +45,7 @@ const ListingClients = () => {
           <th>Phone</th>
         </tr>
       </thead>
-      <tbody>
-      {renderListing()}
-      </tbody>
+      <tbody>{renderListing()}</tbody>
     </Table>
   );
 };
