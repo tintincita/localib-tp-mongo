@@ -5,6 +5,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import Listing from "../components/listing";
 import { NavBar } from "../components/navbar";
 import Clients from "../pages/clients.page";
 import Locations from "../pages/locations.pages";
@@ -14,6 +15,7 @@ const index = () => {
   return (
     <div>
         <NavBar />
+        <Listing />
       <Router>
         <Routes>
           <Route path="/clients" element={<Clients />} />
