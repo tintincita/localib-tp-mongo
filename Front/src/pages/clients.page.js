@@ -4,14 +4,8 @@ import ClientForm from "../components/form_client";
 import ListingClients from "../components/listing_clients";
 
 const Client = ({
-  fullName,
-  setFullName,
-  dob,
-  setDob,
-  email,
-  setEmail,
-  phone,
-  setPhone,
+  client,
+  setClient,
   message,
   setMessage,
 }) => {
@@ -19,14 +13,8 @@ const Client = ({
     <div>
       <ListingClients />
       <ClientForm
-        fullName={fullName}
-        setFullName={setFullName}
-        dob={dob}
-        setDob={setDob}
-        email={email}
-        setEmail={setEmail}
-        phone={phone}
-        setPhone={setPhone}
+        client={client}
+        setClient={setClient}
         message={message}
         setMessage={setMessage}
       />

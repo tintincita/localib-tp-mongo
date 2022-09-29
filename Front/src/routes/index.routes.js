@@ -12,10 +12,7 @@ import Vehicules from "../pages/vehicules.page";
 
 const index = () => {
 
-  const [fullName, setFullName] = useState("");
-  const [dob, setDob] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [client, setClient] = useState({});
   const [message, setMessage] = useState("");
 
   return (
@@ -26,14 +23,8 @@ const index = () => {
             path="/clients"
             element={
               <Clients
-                fullName={fullName}
-                setFullName={setFullName}
-                dob={dob}
-                setDob={setDob}
-                email={email}
-                setEmail={setEmail}
-                phone={phone}
-                setPhone={setPhone}
+                client={client}
+                setClient={setClient}
                 message={message}
                 setMessage={setMessage}
               />

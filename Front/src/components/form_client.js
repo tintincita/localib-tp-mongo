@@ -5,20 +5,10 @@ import React, { useEffect, useState } from "react";
 
 import CONFIG from "../config/config.json";
 
-function ClientForm({
-  fullName,
-  setFullName,
-  dob,
-  setDob,
-  email,
-  setEmail,
-  phone,
-  setPhone,
-  message,
-  setMessage,
-}) {
+function ClientForm({ client, setClient, message, setMessage }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       let res = await fetch(CONFIG.api.clients, {
         method: "POST",
@@ -26,21 +16,13 @@ function ClientForm({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          fullName: fullName,
-          dob: dob,
-          email: email,
-          phone: phone,
-        }),
+        body: JSON.stringify(client),
       });
       console.log(res);
       let resJson = await res.json();
       console.log(resJson);
       if (res.status === 200) {
-        setFullName("");
-        setDob("");
-        setEmail("");
-        setPhone("");
+        setClient({});
         setMessage("User created successfully");
       } else {
         setMessage("Some error occured");
@@ -50,48 +32,51 @@ function ClientForm({
     }
   };
 
+  const updateField = (field, value) => {
+    let updatedField = {};
+    updatedField = { [field]: value };
+    setClient((client) => ({ ...client, ...updatedField }));
+  };
+
   return (
     <Card className="mx-auto" style={{ width: "50%" }}>
       <Card.Body>
         <Card.Title>Client Details</Card.Title>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formClientFullName">
-            <Form.Label>Full Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Full Name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group
+          <Form.Label>Full Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Full Name"
+            value={client.fullName}
+            onChange={(e) => updateField("fullName", e.target.value)}
+          />
+
+          <Form.Label>Date Of Birth</Form.Label>
+          <Form.Control
+            type="date"
             className="mb-3"
-            controlId="formClientDob"
-            value={dob}
-            onChange={(e) => setDob(e.target.value)}
-          >
-            <Form.Label>Date Of Birth</Form.Label>
-            <Form.Control type="date" />
-          </Form.Group>
-          <Form.Group
+            value={client.dob}
+            onChange={(e) => updateField("dob", e.target.value)}
+          />
+
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
             className="mb-3"
-            controlId="formClientEmail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          >
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
-          </Form.Group>
-          <Form.Group
+            value={client.email}
+            onChange={(e) => updateField("email", e.target.value)}
+          />
+
+          <Form.Label>Phone</Form.Label>
+          <Form.Control
+            type="string"
+            placeholder="00 0000 0000"
             className="mb-3"
-            controlId="formClientPhone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          >
-            <Form.Label>Phone</Form.Label>
-            <Form.Control type="email" placeholder="00 0000 0000" />
-          </Form.Group>
-          <Button variant="primary" type="submit" onClick={handleSubmit}>
+            value={client.phone}
+            onChange={(e) => updateField("phone", e.target.value)}
+          />
+          <Button variant="primary" type="submit" onSubmit={handleSubmit}>
             Submit
           </Button>
         </Form>
