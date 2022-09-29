@@ -1,7 +1,9 @@
+import ListingVehicules from "../components/listing_vehicules"
+
 const Vehicules = () => {
 
     return (
-        <div>Vehicules</div>
+        <ListingVehicules />
     )
 }
 

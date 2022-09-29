@@ -2,6 +2,6 @@
     "api": {
         "clients": "http://localhost:3001/api/clients",
         "locations": "http://localhost:3001/api/locations",
-        "vehiculess": "http://localhost:3001/api/vehicules"
+        "vehicules": "http://localhost:3001/api/vehicules"
     }
 }

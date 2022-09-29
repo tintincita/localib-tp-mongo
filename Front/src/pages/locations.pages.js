@@ -1,6 +1,9 @@
+import ListingLocations from "../components/listing_locations"
+
+
 const Locations = () => {
 return (
-    <div>Locations</div>
+    <ListingLocations />
 )
 }
 

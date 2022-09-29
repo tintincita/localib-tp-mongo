@@ -1,18 +1,17 @@
 import React from 'react';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import CONFIG from './config/config.json'
 
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Listing from './components/listing'
+import Routes from './routes/index.routes'
+
+import NavBar from './components/navbar'
 
 
 const App = () => {
-  const apiUrl = CONFIG.api;
   return(
     <div className="App">
-      <Listing list={apiUrl.clients}/>
-      <Listing list={apiUrl.locations}/>
-      <Listing list={apiUrl.vehicules}/>
+      <NavBar />
+      <Routes />
     </div>
   )
 }

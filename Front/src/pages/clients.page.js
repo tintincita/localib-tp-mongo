@@ -1,26 +1,10 @@
 import { useState, useEffect } from "react";
+import ListingClients from "../components/listing_clients";
 
 import { clientService } from "../services/client.services";
 
-
 const Client = () => {
-    const [clients, setClients] = useState([]);
+  return <ListingClients />;
+};
 
-    useEffect(() => {
-        const fetchClients = async () => {
-            const response = await clientService.getClients()
-            setClients(response.data)
-        }
-        fetchClients()
-    })
-    
-    console.log(clients);
-
-    return (
-        <div>
-            Clients
-        </div>
-    )
-}
-
-export default Client
+export default Client;

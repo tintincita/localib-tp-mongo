@@ -1,11 +1,11 @@
 import React, {  useEffect, useState } from 'react';
+import CONFIG from '../config/config.json'
 
-
-export default ListingClient = (props) => {
+const ListingLocations = (props) => {
     const [records, setRecords] = useState([])
 
     useEffect(() => {
-        fetch(props.list)
+        fetch(CONFIG.api.locations)
         .then(response => response.json())
         .then(records => {
             setRecords(records)
@@ -17,7 +17,8 @@ export default ListingClient = (props) => {
         let recordList = []
 
         records.map(record => {
-            return recordList.push(<li key={record.id}>{record.fullName}</li>)
+            console.log(record);
+            return recordList.push(<li key={record.id}>{record.startDate} {record.endDate} {record.vehicule.marque} {record.client.fullName}</li>)
         })
         return recordList;
     }
@@ -28,3 +29,5 @@ export default ListingClient = (props) => {
         </ul>
     )
 }
+
+export default ListingLocations
