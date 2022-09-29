@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
+import Moment from "react-moment";
 
 import CONFIG from "../config/config.json";
 
@@ -19,11 +20,10 @@ const ListingLocations = (props) => {
     let recordList = [];
 
     records.map((record) => {
-      console.log(record);
       return recordList.push(
-        <tr>
-          <td>{record.startDate}</td>
-          <td>{record.endDate}</td>
+        <tr key={record.id}>
+          <td><Moment format="DD-MM-YYYY">{record.startDate}</Moment></td>
+          <td><Moment format="DD-MM-YYYY">{record.endDate}</Moment></td>
           <td>{record.prixTotal}</td>
           <td>{record.vehicule.immatriculation}</td>
           <td>{record.client.fullName}</td>

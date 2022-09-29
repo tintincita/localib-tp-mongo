@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
+import Moment from "react-moment";
 
 import CONFIG from "../config/config.json";
 
@@ -22,7 +23,7 @@ const ListingClients = () => {
       return recordList.push(
         <tr key={record.id}>
           <td>{record.fullName}</td>
-          <td>{record.dob}</td>
+          <td><Moment format="DD-MM-YYYY">{record.dob}</Moment></td>
           <td>{record.email}</td>
           <td>{record.phone}</td>
         </tr>
