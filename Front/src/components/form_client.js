@@ -3,23 +3,28 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import React, { useEffect, useState } from "react";
 
-import CONFIG from '../config/config.json'
+import CONFIG from "../config/config.json";
 
-function ClientForm() {
-  const [fullName, setFullName] = useState("");
-  const [dob, setDob] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
-
+function ClientForm({
+  fullName,
+  setFullName,
+  dob,
+  setDob,
+  email,
+  setEmail,
+  phone,
+  setPhone,
+  message,
+  setMessage,
+}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       let res = await fetch(CONFIG.api.clients, {
         method: "POST",
-        mode: 'cors',
+        mode: "cors",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           fullName: fullName,
@@ -52,17 +57,37 @@ function ClientForm() {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formClientFullName">
             <Form.Label>Full Name</Form.Label>
-            <Form.Control type="text" placeholder="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)}/>
+            <Form.Control
+              type="text"
+              placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formClientDob" value={dob} onChange={(e) => setDob(e.target.value)}>
+          <Form.Group
+            className="mb-3"
+            controlId="formClientDob"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          >
             <Form.Label>Date Of Birth</Form.Label>
             <Form.Control type="date" />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formClientEmail" value={email} onChange={(e) => setEmail(e.target.value)}>
+          <Form.Group
+            className="mb-3"
+            controlId="formClientEmail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          >
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" placeholder="Enter email" />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formClientPhone" value={phone} onChange={(e) => setPhone(e.target.value)}>
+          <Form.Group
+            className="mb-3"
+            controlId="formClientPhone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          >
             <Form.Label>Phone</Form.Label>
             <Form.Control type="email" placeholder="00 0000 0000" />
           </Form.Group>
