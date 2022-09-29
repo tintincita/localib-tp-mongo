@@ -2,19 +2,14 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Moment from "react-moment";
 
-import CONFIG from "../config/config.json";
 
-const ListingClients = ({records, setRecords}) => {
+import { getClients } from "../services/client.services";
 
-  
-// TODO: move fetch to client.service
-  useEffect(() => {
-    fetch(CONFIG.api.clients)
-      .then((response) => response.json())
-      .then((records) => {
-        setRecords(records);
-      })
-      .catch((error) => console.log(error));
+const ListingClients = ({ records, setRecords }) => {
+
+  useEffect( () => {
+    getClients().then(records => setRecords(records))
+
   }, []);
 
   const renderListing = () => {

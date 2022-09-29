@@ -1,9 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import CONFIG from "../config/config.json";
 
 function ClientForm({handleSubmit, client, setClient, message }) {
 
