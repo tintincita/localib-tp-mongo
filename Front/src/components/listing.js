@@ -1,49 +1,30 @@
-import React, { Component } from 'react';
+import React, {  useEffect, useState } from 'react';
 
-import CONFIG from '../config/config.json'
 
-class Listing extends Component {
+export default ListingClient = (props) => {
+    const [records, setRecords] = useState([])
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            records: []
-        }
+    useEffect(() => {
+        fetch(props.list)
+        .then(response => response.json())
+        .then(records => {
+            setRecords(records)
+        })
+        .catch(error => console.log(error))
+    }, [])
 
-    }
-
-    componentDidMount() {
-        console.log(this.props.list);
-        console.log(typeof this.props.list);
-        fetch(this.props.list)
-            .then(response => response.json())
-            .then(records => {
-                this.setState({
-                    records: records
-                })
-            })
-            .catch(error => console.log(error))
-    }
-
-    renderListing() {
+    const renderListing = () => {
         let recordList = []
-        this.state.records.map(record => {
-            console.log(record)
+
+        records.map(record => {
             return recordList.push(<li key={record.id}>{record.fullName}</li>)
         })
-        console.log(recordList)
-        console.log(typeof recordList)
-        console.log(typeof recordList[0])
         return recordList;
     }
 
-    render() {
-        return (
-            <ul>
-                {this.renderListing()}
-            </ul>
-        );
-    }
+    return(
+        <ul>
+            {renderListing()}
+        </ul>
+    )
 }
-
-export default Listing;
