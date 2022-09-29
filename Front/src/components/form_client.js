@@ -5,35 +5,8 @@ import React, { useEffect, useState } from "react";
 
 import CONFIG from "../config/config.json";
 
-function ClientForm() {
-  const [client, setClient] = useState({});
-  const [message, setMessage] = useState("");
+function ClientForm({handleSubmit, client, setClient, message }) {
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      let res = await fetch(CONFIG.api.clients, {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(client),
-      });
-      console.log(res);
-      let resJson = await res.json();
-      console.log(resJson);
-      if (res.status === 200) {
-        setClient({});
-        setMessage("User created successfully");
-      } else {
-        setMessage("Some error occured");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const updateField = (field, value) => {
     let updatedField = {};

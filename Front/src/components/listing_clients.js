@@ -4,10 +4,10 @@ import Moment from "react-moment";
 
 import CONFIG from "../config/config.json";
 
-const ListingClients = () => {
-  const [records, setRecords] = useState([]);
-  
+const ListingClients = ({records, setRecords}) => {
 
+  
+// TODO: move fetch to client.service
   useEffect(() => {
     fetch(CONFIG.api.clients)
       .then((response) => response.json())
