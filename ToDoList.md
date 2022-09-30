@@ -18,7 +18,7 @@
 - ~~vehicules clear form~~
 
 - ~~locations services~~
-- locations form
+- ~~locations form~~
 - locations -page
 - locations - dispo back
 

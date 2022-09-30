@@ -16,6 +16,7 @@ const Locations = () => {
 
   const handleLocationClick = (record) => {
     record.startDate = moment(record.startDate).format("YYYY-MM-DD");
+    record.endDate = moment(record.endDate).format("YYYY-MM-DD");
     setLocation(record);
   };
 
