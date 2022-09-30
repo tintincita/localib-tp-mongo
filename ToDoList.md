@@ -19,7 +19,7 @@
 
 - ~~locations services~~
 - ~~locations form~~
-- locations -page
+- locations - new - page
 - locations - dispo back
 
 - vehicule delete button
