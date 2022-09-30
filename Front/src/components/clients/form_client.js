@@ -8,8 +8,6 @@ import { deleteClient } from "../../services/client.services";
 function ClientForm({handleSubmit, client, setClient, message, setMessage, clearForm }) {
   useEffect (() => {}, [client, setClient])
 
-
-
   const updateField = (field, value) => {
     let updatedField = {};
     updatedField = { [field]: value };
@@ -70,7 +68,7 @@ function ClientForm({handleSubmit, client, setClient, message, setMessage, clear
           />
           <div className="d-grid gap-2">
           <Button variant="primary" size="lg" type="submit" onSubmit={handleSubmit}>
-            Submit
+            Submit Form
           </Button>{' '}
           <Button variant="primary" type="reset" onClick={handleClearForm}>
             Clear Form

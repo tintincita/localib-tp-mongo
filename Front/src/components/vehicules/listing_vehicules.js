@@ -2,17 +2,12 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 
 import CONFIG from "../../config/config.json";
+import { getVehicules } from "../../services/vehicules.services";
 
-const ListingVehicules = (props) => {
-  const [records, setRecords] = useState([]);
+const ListingVehicules = ({records, setRecords, handleVehiculeClick}) => {
 
   useEffect(() => {
-    fetch(CONFIG.api.vehicules)
-      .then((response) => response.json())
-      .then((records) => {
-        setRecords(records);
-      })
-      .catch((error) => console.log(error));
+    getVehicules().then(records => setRecords(records))
   }, []);
 
   const renderListing = () => {
@@ -22,7 +17,7 @@ const ListingVehicules = (props) => {
     records.map((record) => {
       record.disponibility ? (dispoText = "yes") : (dispoText = "No");
       return recordList.push(
-        <tr key={record.id}>
+        <tr key={record.id} onClick={() => handleVehiculeClick(record)}>
           <td>{record.marque}</td>
           <td>{record.model}</td>
           <td>{record.immatriculation}</td>

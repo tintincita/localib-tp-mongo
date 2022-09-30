@@ -1,13 +1,15 @@
 import CONFIG from "../config/config.json";
 
+const URL = CONFIG.api.clients
+
 export function getClients() {
-  return fetch(CONFIG.api.clients)
+  return fetch(URL)
     .then((response) => response.json())
     .catch((error) => console.log(error));
 }
 
 export function createClient(client) {
-  return fetch(CONFIG.api.clients, {
+  return fetch(URL, {
     method: "POST",
     mode: "cors",
     headers: {
@@ -27,7 +29,7 @@ export function createClient(client) {
 }
 
 export function updateClient(client) {
-  return fetch(`${CONFIG.api.clients}${client.id}`, {
+  return fetch(`${URL}${client.id}`, {
     method: "PUT",
     mode: "cors",
     headers: {
