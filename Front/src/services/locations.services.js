@@ -8,14 +8,14 @@ export function getLocations() {
     .catch((error) => console.log(error));
 }
 
-export function createLocations(location) {
+export function createLocation(location) {
   return fetch(URL, {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(vehicule),
+    body: JSON.stringify(location),
   })
     .then((res) => res.json())
     .then((res) => {

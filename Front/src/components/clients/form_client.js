@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import React, { useEffect } from "react";
 import { deleteClient } from "../../services/client.services";
+import NewLocation from "./form_location_for_client";
 
 
 function ClientForm({handleSubmit, client, setClient, message, setMessage, clearForm }) {
@@ -16,6 +17,10 @@ function ClientForm({handleSubmit, client, setClient, message, setMessage, clear
 
   const handleClearForm = () => {
     clearForm()
+  }
+
+  const handleNewLocation = () => {
+    e.preventDefault();
   }
 
   const handleDeleteClient = async () => {
@@ -68,7 +73,10 @@ function ClientForm({handleSubmit, client, setClient, message, setMessage, clear
           />
           <div className="d-grid gap-2">
           <Button variant="primary" size="lg" type="submit" onSubmit={handleSubmit}>
-            Submit Form
+            Update Client Details
+          </Button>{' '}
+          <Button variant="primary" size="lg" type="submit" onSubmit={handleNewLocation}>
+            Book a Car
           </Button>{' '}
           <Button variant="primary" type="reset" onClick={handleClearForm}>
             Clear Form
@@ -80,6 +88,7 @@ function ClientForm({handleSubmit, client, setClient, message, setMessage, clear
         </Form>
       </Card.Body>
       <div className="message">{message ? <p>{message}</p> : null}</div>
+      <NewLocation client={client} />
     </Card>
   );
 }
