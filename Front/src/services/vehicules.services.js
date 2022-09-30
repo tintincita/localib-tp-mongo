@@ -61,7 +61,7 @@ export function deleteVehicule(vehicule) {
 }
 
 export function getVehiculesAvailable(startDate, endDate) {
-  let query = "?startDate=" + startDate + "&endDate=" + endDate;
+  let query = "disponibility?startDate=" + startDate + "&endDate=" + endDate;
   return fetch(`${URL}${query}`)
     .then((response) => response.json())
     .catch((error) => console.log(error));
