@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 
-import CONFIG from "../config/config.json";
+import CONFIG from "../../config/config.json";
 
 const ListingVehicules = (props) => {
   const [records, setRecords] = useState([]);

@@ -4,8 +4,7 @@ import moment from "moment";
 import ClientForm from "../components/clients/form_client";
 import ListingClients from "../components/clients/listing_clients";
 
-import { createClient, getClients } from "../services/client.services";
-import AddClientButton from "../components/clients/button_add_client";
+import { createClient, getClients, updateClient } from "../services/client.services";
 
 const Client = () => {
   const [client, setClient] = useState({
@@ -22,14 +21,13 @@ const Client = () => {
     setClient(record);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createClient(client).then((message) => setMessage(message));
-    getClients().then((records) => setRecords(records));
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-  const handleAddClientButton = (e) => {
-    console.log("ooooh, that was a click");
+    client.id
+    ? await updateClient(client).then((message) => setMessage(message))
+    : await createClient(client).then(message => setMessage(message))
+    getClients().then((records) => setRecords(records));
   };
 
   return (
@@ -39,7 +37,7 @@ const Client = () => {
         setRecords={setRecords}
         handleClientClick={handleClientClick}
       />
-      <AddClientButton handleAddClientButton={handleAddClientButton} />
+
       <ClientForm
         handleSubmit={handleSubmit}
         client={client}

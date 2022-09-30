@@ -1,4 +1,4 @@
-import ListingVehicules from "../components/listing_vehicules"
+import ListingVehicules from "../components/vehicules/listing_vehicules"
 
 const Vehicules = () => {
 

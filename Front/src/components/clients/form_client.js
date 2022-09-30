@@ -13,6 +13,15 @@ function ClientForm({handleSubmit, client, setClient, message }) {
     setClient((client) => ({ ...client, ...updatedField }));
   };
 
+  const handleClearForm = () => {
+    setClient({
+      fullName: "",
+      dob: "",
+      email: "",
+      phone: "",
+    })
+  }
+
   return (
     <Card className="mx-auto" style={{ width: "50%" }}>
       <Card.Body>
@@ -55,6 +64,9 @@ function ClientForm({handleSubmit, client, setClient, message }) {
             Submit
           </Button>
         </Form>
+          <Button variant="primary" type="submit" onClick={handleClearForm}>
+            Clear Form
+          </Button>
       </Card.Body>
       <div className="message">{message ? <p>{message}</p> : null}</div>
     </Card>

@@ -17,8 +17,28 @@ export function createClient(client) {
   })
     .then((res) => res.json())
     .then((res) => {
-      if (res.status === 200) {
-        return "User created successfully"
+      console.log(res);
+      if (res.fullName) {
+        return "User created successfully";
+      } else {
+        return "Some error occured";
+      }
+    });
+}
+
+export function updateClient(client) {
+  return fetch(`${CONFIG.api.clients}${client.id}`, {
+    method: "PUT",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(client),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.fullName) {
+        return "User updated succesfully";
       } else {
         return "Some error occured";
       }
