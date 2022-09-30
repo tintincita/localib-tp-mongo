@@ -48,13 +48,13 @@ export function updateVehicule(vehicule) {
 }
 
 export function deleteVehicule(vehicule) {
-  return fetch(`${URL}${client.id}`, {
+  return fetch(`${URL}${vehicule.id}`, {
     method: "DELETE",
     mode: "cors",
   })
     .then((res) => {
       if (res.status === 204) {
-        return "User deleted succesfully";
+        return "Vehicule deleted succesfully";
       } else {
         return "Some error occured";
       }

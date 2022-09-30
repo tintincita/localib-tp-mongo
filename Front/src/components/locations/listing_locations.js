@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Moment from "react-moment";
 
-import CONFIG from "../config/config.json";
+import CONFIG from "../../config/config.json";
 
 const ListingLocations = (props) => {
   const [records, setRecords] = useState([]);

@@ -17,9 +17,12 @@
 - ~~vehicules edit~~
 - ~~vehicules clear form~~
 
+- ~~locations services~~
 - locations form
 - locations -page
 - locations - dispo back
+
+- vehicule delete button
 
 
 # List of tasks - non essential (nice to do)
