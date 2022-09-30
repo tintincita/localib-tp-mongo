@@ -8,13 +8,14 @@ import { deleteClient } from "../../services/client.services";
 function ClientForm({handleSubmit, client, setClient, message, setMessage }) {
   useEffect (() => {}, [client, setClient])
 
-  const clearClientInForm = () => {
+  const clearForm = () => {
     setClient({
       fullName: "",
       dob: "",
       email: "",
       phone: "",
     })
+    setMessage("")
   }
 
   const updateField = (field, value) => {
@@ -24,12 +25,12 @@ function ClientForm({handleSubmit, client, setClient, message, setMessage }) {
   };
 
   const handleClearForm = () => {
-    clearClientInForm()
+    clearForm()
   }
 
   const handleDeleteClient = async () => {
     await deleteClient(client).then((message) => setMessage(message))
-    clearClientInForm()
+    clearForm()
   }
 
   let deleteClientStyle = {display: "none"}

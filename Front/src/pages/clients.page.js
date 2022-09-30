@@ -28,7 +28,19 @@ const Client = () => {
     ? await updateClient(client).then((message) => setMessage(message))
     : await createClient(client).then(message => setMessage(message))
     getClients().then((records) => setRecords(records));
+    clearForm()
+
   };
+
+  const clearForm = () => {
+    setClient({
+      fullName: "",
+      dob: "",
+      email: "",
+      phone: "",
+    })
+    setMessage("")
+  }
 
   return (
     <div>
@@ -44,6 +56,7 @@ const Client = () => {
         setClient={setClient}
         message={message}
         setMessage={setMessage}
+        clearForm = {clearForm}
       />
     </div>
   );
