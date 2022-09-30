@@ -15,7 +15,24 @@ module.exports.getVehiculeByID = async (request, response) => {
 };
 
 module.exports.getVehiculeByDates = async (request, response) => {
-  console.log(request);
+
+  queryEndDate = request.params.endDate+"00:00:00.000Z";
+  queryStartDate = request.params.startDate+"00:00:00.000Z";
+  console.log(queryEndDate);
+  console.log(queryStartDate);
+
+  Vehicule.find({ locations: [] }, function(err,docs){
+    console.log("veh with no loc", docs);
+    return docs
+  });
+  // Vehicule.find(
+  //   { "locations.prixTotal": "3600" },
+  //   function (err, docs) {
+  //     console.log("there");
+  //     console.log("otherdocs", docs);
+  //     console.log("err",err);
+  //   }
+  // );
 };
 
 module.exports.createVehicule = async (request, response) => {
