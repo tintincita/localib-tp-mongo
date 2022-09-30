@@ -1,6 +1,6 @@
 import CONFIG from "../config/config.json";
 
-const URL = CONFIG.api.vehicules
+const URL = CONFIG.api.vehicules;
 
 export function getVehicules() {
   return fetch(URL)
@@ -51,13 +51,18 @@ export function deleteVehicule(vehicule) {
   return fetch(`${URL}${vehicule.id}`, {
     method: "DELETE",
     mode: "cors",
-  })
-    .then((res) => {
-      if (res.status === 204) {
-        return "Vehicule deleted succesfully";
-      } else {
-        return "Some error occured";
-      }
-    });
+  }).then((res) => {
+    if (res.status === 204) {
+      return "Vehicule deleted succesfully";
+    } else {
+      return "Some error occured";
+    }
+  });
 }
 
+export function getVehiculesAvailable(startDate, endDate) {
+  let query = "?startDate=" + startDate + "&endDate=" + endDate;
+  return fetch(`${URL}${query}`)
+    .then((response) => response.json())
+    .catch((error) => console.log(error));
+}
