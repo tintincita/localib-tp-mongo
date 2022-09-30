@@ -18,13 +18,12 @@ module.exports.getVehiculeByDates = async (request, response) => {
 
   queryEndDate = request.params.endDate+"00:00:00.000Z";
   queryStartDate = request.params.startDate+"00:00:00.000Z";
-  console.log(queryEndDate);
-  console.log(queryStartDate);
+  // console.log(queryEndDate);
+  // console.log(queryStartDate);
 
-  Vehicule.find({ locations: [] }, function(err,docs){
-    console.log("veh with no loc", docs);
-    return docs
-  });
+  let docs = await Vehicule.find({ locations: [] })
+  console.log(docs);
+  response.json(docs)
   // Vehicule.find(
   //   { "locations.prixTotal": "3600" },
   //   function (err, docs) {
