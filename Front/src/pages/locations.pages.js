@@ -1,10 +1,13 @@
-import ListingLocations from "../components/locations/listing_locations"
-
+import LocationForm from "../components/locations/form_location";
+import ListingLocations from "../components/locations/listing_locations";
 
 const Locations = () => {
-return (
-    <ListingLocations />
-)
-}
+  return (
+    <>
+      <ListingLocations />
+      <LocationForm />
+    </>
+  );
+};
 
-export default Locations
+export default Locations;
