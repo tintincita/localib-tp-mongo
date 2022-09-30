@@ -5,18 +5,10 @@ import React, { useEffect } from "react";
 import { deleteClient } from "../../services/client.services";
 
 
-function ClientForm({handleSubmit, client, setClient, message, setMessage }) {
+function ClientForm({handleSubmit, client, setClient, message, setMessage, clearForm }) {
   useEffect (() => {}, [client, setClient])
 
-  const clearForm = () => {
-    setClient({
-      fullName: "",
-      dob: "",
-      email: "",
-      phone: "",
-    })
-    setMessage("")
-  }
+
 
   const updateField = (field, value) => {
     let updatedField = {};
