@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Moment from "react-moment";
 
+import { getClients } from "../../services/client.services";
 
-import { getClients } from "../services/client.services";
-
-const ListingClients = ({ records, setRecords }) => {
+const ListingClients = ({ records, setRecords, handleClientClick }) => {
 
   useEffect( () => {
     getClients().then(records => setRecords(records))
@@ -17,7 +16,7 @@ const ListingClients = ({ records, setRecords }) => {
 
     records.map((record) => {
       return recordList.push(
-        <tr key={record.id}>
+        <tr key={record.id}  onClick={() => handleClientClick(record)}>
           <td>{record.fullName}</td>
           <td>
             <Moment format="DD-MM-YYYY">{record.dob}</Moment>
