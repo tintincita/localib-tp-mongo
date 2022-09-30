@@ -2,18 +2,14 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Moment from "react-moment";
 
-import CONFIG from "../../config/config.json";
+import { getLocations } from "../../services/locations.services";
 
-const ListingLocations = (props) => {
-  const [records, setRecords] = useState([]);
+const ListingLocations = ({records, setRecords, handleLocationClick}) => {
+  
 
   useEffect(() => {
-    fetch(CONFIG.api.locations)
-      .then((response) => response.json())
-      .then((records) => {
-        setRecords(records);
-      })
-      .catch((error) => console.log(error));
+    getLocations().then(records => setRecords(records))
+
   }, []);
 
   const renderListing = () => {
@@ -21,7 +17,7 @@ const ListingLocations = (props) => {
 
     records.map((record) => {
       return recordList.push(
-        <tr key={record.id}>
+        <tr key={record.id} onClick={()=> handleLocationClick(record)}>
           <td><Moment format="DD-MM-YYYY">{record.startDate}</Moment></td>
           <td><Moment format="DD-MM-YYYY">{record.endDate}</Moment></td>
           <td>{record.prixTotal}</td>
