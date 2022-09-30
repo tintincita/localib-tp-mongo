@@ -7,6 +7,7 @@
 - ~~when form with existing client button action is update~~
 - ~~clients edit~~
 - ~~add button to clear form~~
+- delete client button
 
 - vehicules form
 - vehicules add

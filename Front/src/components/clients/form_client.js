@@ -1,11 +1,21 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import React from "react";
+import React, { useEffect } from "react";
+import { deleteClient } from "../../services/client.services";
 
 
-function ClientForm({handleSubmit, client, setClient, message }) {
+function ClientForm({handleSubmit, client, setClient, message, setMessage }) {
+  useEffect (() => {}, [client, setClient])
 
+  const clearClientInForm = () => {
+    setClient({
+      fullName: "",
+      dob: "",
+      email: "",
+      phone: "",
+    })
+  }
 
   const updateField = (field, value) => {
     let updatedField = {};
@@ -14,12 +24,17 @@ function ClientForm({handleSubmit, client, setClient, message }) {
   };
 
   const handleClearForm = () => {
-    setClient({
-      fullName: "",
-      dob: "",
-      email: "",
-      phone: "",
-    })
+    clearClientInForm()
+  }
+
+  const handleDeleteClient = async () => {
+    await deleteClient(client).then((message) => setMessage(message))
+    clearClientInForm()
+  }
+
+  let deleteClientStyle = {display: "none"}
+  if(client.id) {
+    deleteClientStyle = {}
   }
 
   return (
@@ -60,13 +75,18 @@ function ClientForm({handleSubmit, client, setClient, message }) {
             value={client.phone}
             onChange={(e) => updateField("phone", e.target.value)}
           />
-          <Button variant="primary" type="submit" onSubmit={handleSubmit}>
+          <div className="d-grid gap-2">
+          <Button variant="primary" size="lg" type="submit" onSubmit={handleSubmit}>
             Submit
-          </Button>
-        </Form>
-          <Button variant="primary" type="submit" onClick={handleClearForm}>
+          </Button>{' '}
+          <Button variant="primary" type="reset" onClick={handleClearForm}>
             Clear Form
-          </Button>
+          </Button>{' '}
+          <Button variant="danger" type="submit" onClick={handleDeleteClient} style={deleteClientStyle}>
+            Delete Client
+          </Button>{' '}
+          </div>
+        </Form>
       </Card.Body>
       <div className="message">{message ? <p>{message}</p> : null}</div>
     </Card>

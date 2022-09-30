@@ -44,3 +44,17 @@ export function updateClient(client) {
       }
     });
 }
+
+export function deleteClient(client) {
+  return fetch(`${CONFIG.api.clients}${client.id}`, {
+    method: "DELETE",
+    mode: "cors",
+  })
+    .then((res) => {
+      if (res.status === 204) {
+        return "User deleted succesfully";
+      } else {
+        return "Some error occured";
+      }
+    });
+}

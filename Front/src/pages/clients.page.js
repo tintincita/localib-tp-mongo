@@ -43,6 +43,7 @@ const Client = () => {
         client={client}
         setClient={setClient}
         message={message}
+        setMessage={setMessage}
       />
     </div>
   );
