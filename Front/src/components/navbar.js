@@ -7,9 +7,9 @@ import logo from "../assets/localib.png";
 
 const NavBar = () => {
 return (
-  <Navbar expand="lg" bg="white">
+  <Navbar expand="sm" bg="white" >
       <Container>
-        <Navbar.Brand href="#home"><img src={logo} height="100" alt="localib Logo" loading="lazy" /></Navbar.Brand>
+        <Navbar.Brand href="#home"><img src={logo} height="120" alt="localib Logo" loading="lazy" /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
