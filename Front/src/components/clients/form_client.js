@@ -75,7 +75,7 @@ function ClientForm({handleSubmit, client, setClient, message, setMessage, clear
           <Button variant="primary" size="lg" type="submit" onSubmit={handleSubmit}>
             Update Client Details
           </Button>{' '}
-          <Button variant="primary" size="lg" type="submit" onSubmit={handleNewLocation}>
+          <Button variant="primary" size="lg" type="submit" onSubmit={handleNewLocation} style={deleteClientStyle}>
             Book a Car
           </Button>{' '}
           <Button variant="primary" type="reset" onClick={handleClearForm}>

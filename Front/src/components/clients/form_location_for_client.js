@@ -42,7 +42,6 @@ const NewLocation = ({ client }) => {
   };
   
   const handleVehiculeClick = (record) => {
-    // e.preventDefault();
     setLocation((location) => ({ ...location, ...{ vehicule: record.id } }));
   };
   
@@ -70,7 +69,7 @@ const NewLocation = ({ client }) => {
   
   return (
     <>
-      <Card className="mx-auto" style={{ width: "100%" }}>
+      <Card className="mx-auto">
         <Card.Body>
           <Card.Title>New Location Details</Card.Title>
           <Form onSubmit={handleCheckAvailability}>
@@ -94,7 +93,7 @@ const NewLocation = ({ client }) => {
           </Form>
         </Card.Body>
       </Card>
-      <Card className="mx-auto" style={{ width: "100%" }}>
+      <Card className="mx-auto">
         <Table striped bordered hover>
           <thead>
             <tr>
