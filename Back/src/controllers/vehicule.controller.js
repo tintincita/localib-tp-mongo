@@ -14,7 +14,7 @@ module.exports.getVehiculeByID = async (request, response) => {
   }
 };
 
-module.exports.getVehiculeByDates = async (request, response) => {
+module.exports.getVehiculesByDates = async (request, response) => {
 
   queryEndDate = request.params.endDate+"00:00:00.000Z";
   queryStartDate = request.params.startDate+"00:00:00.000Z";
