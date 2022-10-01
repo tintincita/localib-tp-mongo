@@ -1,7 +1,40 @@
-const Locations = () => {
-return (
-    <div>Locations</div>
-)
-}
+import React, { useState } from "react";
+import moment from "moment";
 
-export default Locations
+import LocationForm from "../components/locations/form_location";
+import ListingLocations from "../components/locations/listing_locations";
+import Button from "react-bootstrap/esm/Button";
+
+const Locations = () => {
+  const [records, setRecords] = useState([]);
+  const [location, setLocation] = useState({
+    startDate: "",
+    endDate: "",
+    prixTotal: 0,
+    vehicule: "",
+    client: "",
+  });
+
+  const handleLocationClick = (record) => {
+    record.startDate = moment(record.startDate).format("YYYY-MM-DD");
+    record.endDate = moment(record.endDate).format("YYYY-MM-DD");
+    setLocation(record);
+  };
+
+  return (
+    <>
+      <ListingLocations
+        records={records}
+        setRecords={setRecords}
+        handleLocationClick={handleLocationClick}
+      />
+      <LocationForm location={location} setLocation={setLocation} />
+      
+      <a href="/newLocation">
+      <Button variant="primary">New Location</Button>
+      </a>
+    </>
+  );
+};
+
+export default Locations;

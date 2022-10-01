@@ -15,6 +15,8 @@ const middleware = require("./middlewares");
 const app = express();
 
 logger.info("connecting to", config.MONGO_URI);
+app.use(cors());
+app.use(express.json());
 
 mongoose
   .connect(config.MONGO_URI, {
@@ -29,8 +31,6 @@ mongoose
   });
 
 
-app.use(cors());
-app.use(express.json());
 
 app.use("/api/vehicules", vehiculeRouter);
 app.use("/api/clients", clientRouter);

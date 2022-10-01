@@ -15,6 +15,7 @@ module.exports.getClientByID = async (request, response) => {
 
 module.exports.createClient = async (request, response) => {
     const { fullName, dob, email, phone } = request.body
+    console.log(request.body)
 
     const newClient = new Client({
         fullName: fullName,
