@@ -25,8 +25,8 @@ const Client = () => {
     e.preventDefault()
 
     client.id
-    ? await updateClient(client).then((message) => setMessage(message))
-    : await createClient(client).then(message => setMessage(message))
+      ? await updateClient(client).then((message) => setMessage(message))
+      : await createClient(client).then(message => setMessage(message))
     getClients().then((records) => setRecords(records));
     clearForm()
 
@@ -56,8 +56,9 @@ const Client = () => {
         setClient={setClient}
         message={message}
         setMessage={setMessage}
-        clearForm = {clearForm}
+        clearForm={clearForm}
       />
+
     </div>
   );
 };

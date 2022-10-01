@@ -19,7 +19,6 @@ module.exports.getVehiculesByDates = async (request, response) => {
   try {
     let locStartDate = request.query.startDate
     let locEndDate = request.query.endDate
-    let locType = request.query.type
 
     // get list of vehicules that ARE rented out in period
     let query = { startDate: { $lte: locEndDate }, endDate: { $gte: locStartDate } }
@@ -28,7 +27,9 @@ module.exports.getVehiculesByDates = async (request, response) => {
     let vehiculesLouees = locations.map(location => location.vehicule)
 
     // get list of vehicules of vehicules NOT in previous list
-    docs = await (await Vehicule.find().where('_id').nin(vehiculesLouees).where(type)).includes(locType).exec()
+    docs = await Vehicule.find()
+    .where('_id').nin(vehiculesLouees)
+    .exec()
 
     response.json(docs)
   } catch (err) {
