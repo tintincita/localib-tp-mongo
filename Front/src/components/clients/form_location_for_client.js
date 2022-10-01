@@ -3,6 +3,7 @@ import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/esm/Table";
+import Check from "react-bootstrap/esm/FormCheck";
 import Moment from "moment";
 
 import { getVehiculesAvailable } from "../../services/vehicules.services";
@@ -85,6 +86,35 @@ const NewLocation = ({ client }) => {
               value={location.endDate}
               onChange={(e) => updateField("endDate", e.target.value)}
             />
+            <Form.Label>Type</Form.Label>
+            <div key={`inline-checkbox`} className="mb-3">
+              <Form.Check
+                inline
+                label="Voiture"
+                name="group1"
+                type="checkbox"
+                id={`Voiture`}
+              />
+              <Form.Check
+                inline
+                label="Camion"
+                name="group1"
+                type="checkbox"
+                id={`Camion`}
+              />
+              <Form.Check
+                inline
+                label="Utilitaire"
+                type="checkbox"
+                id={`Utilitaire`}
+              />
+              <Form.Check
+                inline
+                label="Moto"
+                type="checkbox"
+                id={`Moto`}
+              />
+            </div>
             <Button type="submit" onSubmit={handleCheckAvailability}>
               Check availability
             </Button>

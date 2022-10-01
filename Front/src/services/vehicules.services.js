@@ -60,8 +60,8 @@ export function deleteVehicule(vehicule) {
   });
 }
 
-export function getVehiculesAvailable(startDate, endDate) {
-  let query = "disponibility?startDate=" + startDate + "&endDate=" + endDate;
+export function getVehiculesAvailable(startDate, endDate, type) {
+  let query = "disponibility?startDate=" + startDate + "&endDate=" + endDate +"&type="+type;
   return fetch(`${URL}${query}`)
     .then((response) => response.json())
     .catch((error) => console.log(error));
