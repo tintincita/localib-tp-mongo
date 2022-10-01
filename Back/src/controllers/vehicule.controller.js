@@ -1,4 +1,5 @@
 const Vehicule = require("../models/vehicule.model");
+const Location = require('../models/location.model')
 
 module.exports.getAllVehicules = async (request, response) => {
   const vehicules = await Vehicule.find({}).populate("locations");
@@ -15,62 +16,23 @@ module.exports.getVehiculeByID = async (request, response) => {
 };
 
 module.exports.getVehiculesByDates = async (request, response) => {
+  try {
+    let locStartDate = request.query.startDate
+    let locEndDate = request.query.endDate
 
-  queryEndDate = request.params.endDate + "00:00:00.000Z";
-  queryStartDate = request.params.startDate + "00:00:00.000Z";
-  // console.log(queryEndDate);
-  // console.log(queryStartDate);
+    // get list of vehicules that ARE rented out in period
+    let query = { startDate: { $lte: locEndDate }, endDate: { $gte: locStartDate } }
+    const locations = await Location.find(query)
 
-  // to filter by type later
-  let docs = await Vehicule.find({})
+    let vehiculesLouees = locations.map(location => location.vehicule)
 
-  console.log(docs);
-  let allLocations = []
-  let object = ""
-  let subObject
-  // let includesComma
-  // let whereIsComma = 0
-  // let commaPositions = []
+    // get list of vehicules of vehicules NOT in previous list
+    docs = await Vehicule.find().where('_id').nin(vehiculesLouees).exec()
 
-  docs.forEach((doc) => {
-
-    // console.log("locationsIDs",doc.locations)
-    // console.log("typeof locationsIDs",typeof doc.locations)
-    object = JSON.stringify(doc.locations)
-    console.log("da object is... ", object)
-    // console.log("typeof locationsIDs",typeof objects)
-
-    includesComma = object.includes(",")
-    console.log("includesComma"
-      , includesComma)
-    if (includesComma) {
-      // whereIsComma = object.indexOf(",")
-      // console.log("whereIsComma ", whereIsComma)
-      // subObject = object.slice(1,whereIsComma)
-      // console.log("subObject",subObject)
-      subobject = object.split(",").length - 1
-      console.log(subObject)
-}
-
-// object = object.flat()
-console.log("********")
-allLocations.push(object)
-
-  })
-// allLocations = allLocations.flat()
-// allLocations.reduce((acc, val) => acc.concat(val), [])
-console.log("ALL LOCATIONS *******", allLocations);
-response.json(docs)
-
-
-  // Vehicule.find(
-  //   { "locations.prixTotal": "3600" },
-  //   function (err, docs) {
-  //     console.log("there");
-  //     console.log("otherdocs", docs);
-  //     console.log("err",err);
-  //   }
-  // );
+    response.json(docs)
+  } catch (err) {
+    console.log(err)
+  }
 };
 
 module.exports.createVehicule = async (request, response) => {
