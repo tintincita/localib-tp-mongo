@@ -23,6 +23,7 @@
 - locations - dispo back
 
 - vehicule delete button
+- add type to check vehicules availability
 
 
 # List of tasks - non essential (nice to do)

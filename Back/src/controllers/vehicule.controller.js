@@ -16,14 +16,53 @@ module.exports.getVehiculeByID = async (request, response) => {
 
 module.exports.getVehiculesByDates = async (request, response) => {
 
-  queryEndDate = request.params.endDate+"00:00:00.000Z";
-  queryStartDate = request.params.startDate+"00:00:00.000Z";
+  queryEndDate = request.params.endDate + "00:00:00.000Z";
+  queryStartDate = request.params.startDate + "00:00:00.000Z";
   // console.log(queryEndDate);
   // console.log(queryStartDate);
 
-  let docs = await Vehicule.find({ locations: [] })
+  // to filter by type later
+  let docs = await Vehicule.find({})
+
   console.log(docs);
-  response.json(docs)
+  let allLocations = []
+  let object = ""
+  let subObject
+  // let includesComma
+  // let whereIsComma = 0
+  // let commaPositions = []
+
+  docs.forEach((doc) => {
+
+    // console.log("locationsIDs",doc.locations)
+    // console.log("typeof locationsIDs",typeof doc.locations)
+    object = JSON.stringify(doc.locations)
+    console.log("da object is... ", object)
+    // console.log("typeof locationsIDs",typeof objects)
+
+    includesComma = object.includes(",")
+    console.log("includesComma"
+      , includesComma)
+    if (includesComma) {
+      // whereIsComma = object.indexOf(",")
+      // console.log("whereIsComma ", whereIsComma)
+      // subObject = object.slice(1,whereIsComma)
+      // console.log("subObject",subObject)
+      subobject = object.split(",").length - 1
+      console.log(subObject)
+}
+
+// object = object.flat()
+console.log("********")
+allLocations.push(object)
+
+  })
+// allLocations = allLocations.flat()
+// allLocations.reduce((acc, val) => acc.concat(val), [])
+console.log("ALL LOCATIONS *******", allLocations);
+response.json(docs)
+
+
   // Vehicule.find(
   //   { "locations.prixTotal": "3600" },
   //   function (err, docs) {
