@@ -18,6 +18,10 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "nth-check": ">=2.0.1",
+    "validator": ">=13.7.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "dev": "FAST_REFRESH=false react-scripts start",
