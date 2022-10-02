@@ -3,6 +3,7 @@ import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/esm/Table";
+import { useParams } from "react-router-dom";
 import Moment from "moment";
 
 import { getVehiculesAvailable } from "../services/vehicules.services";
@@ -17,8 +18,12 @@ const NewLocation = () => {
   // console.log(wholeUrl);
   // let bitIwant = wholeUrl.slice(-24)
   // console.log("bitIwant", bitIwant);
-  let client = window.location.href.slice(-24)
-  
+  // let client = window.location.href.slice(-24)
+
+  const params = useParams()
+  console.log(params);
+  const client = params.id
+
   const [location, setLocation] = useState({
     startDate: "",
     endDate: "",
@@ -30,42 +35,42 @@ const NewLocation = () => {
 
 
   console.log("location: ", location);
-  
+
   const updateField = (field, value) => {
     let updatedField = {};
     updatedField = { [field]: value };
     setLocation((location) => ({ ...location, ...updatedField }));
   };
-  
+
   const handleCheckAvailability = (e) => {
     e.preventDefault();
     // setLocation((location) => ({ ...location, ...{ client: client.id } }));
     console.log(e.target);
     console.log(location);
-    
+
     getVehiculesAvailable(location.startDate, location.endDate).then((res) => {
       console.log("res", res);
       setRecords(res);
     });
   };
-  
+
   const handleVehiculeClick = (record) => {
     setLocation((location) => ({ ...location, ...{ vehicule: record.id } }));
   };
-  
+
   const handleLocationSubmit = () => {
-    try { 
+    try {
       createLocation(location)
       setMessage("Location successful")
-    } catch(error) {
+    } catch (error) {
       console.log(error);
       setMessage("something went wrong")
     }
   };
-  
+
   const renderListing = () => {
     let recordList = [];
-    
+
     records.map((record) => {
       return recordList.push(
         <tr key={record.id} onClick={() => handleVehiculeClick(record)}>
@@ -79,8 +84,8 @@ const NewLocation = () => {
     });
     return recordList;
   };
-  
-  
+
+
   return (
     <>
       <Card className="mx-auto">
