@@ -18,7 +18,7 @@ function ClientForm({ handleSubmit, client, setClient, message, setMessage, clea
     clearForm()
   }
 
-  const urlForNewLocation = "/newLocation?"+client.id
+  const urlForNewLocation = "/newLocation/"+client.id
   console.log(urlForNewLocation);
 
   const handleDeleteClient = async () => {
