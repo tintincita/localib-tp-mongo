@@ -2,6 +2,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { deleteClient } from "../../services/client.services";
 
 
@@ -18,9 +20,6 @@ function ClientForm({ handleSubmit, client, setClient, message, setMessage, clea
     clearForm()
   }
 
-  const urlForNewLocation = "/newLocation/"+client.id
-  console.log(urlForNewLocation);
-
   const handleDeleteClient = async () => {
     await deleteClient(client).then((message) => setMessage(message))
     clearForm()
@@ -33,9 +32,11 @@ function ClientForm({ handleSubmit, client, setClient, message, setMessage, clea
 
   return (
     <>
-      <Button variant="primary" size="lg" type="submit" href={urlForNewLocation} style={clientLoadedStyle}>
+    <Link to={`/newLocation/${client.id}`}>
+      <Button variant="primary" size="lg" type="submit" style={clientLoadedStyle}>
         Book a Car
       </Button>{' '}
+    </Link>
       <Card className="mx-auto" style={{ width: "50%" }}>
         <Card.Body>
           <Card.Title>Client Details</Card.Title>
