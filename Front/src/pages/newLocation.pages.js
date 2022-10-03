@@ -11,14 +11,7 @@ import { createLocation } from "../services/locations.services"
 
 
 const NewLocation = () => {
-  // console.log("client: ", client);
-  // console.log(data);
-  // console.log(window.location.href)
-  // let wholeUrl = window.location.href
-  // console.log(wholeUrl);
-  // let bitIwant = wholeUrl.slice(-24)
-  // console.log("bitIwant", bitIwant);
-  // let client = window.location.href.slice(-24)
+
 
   const params = useParams()
   console.log(params);
@@ -44,7 +37,6 @@ const NewLocation = () => {
 
   const handleCheckAvailability = (e) => {
     e.preventDefault();
-    // setLocation((location) => ({ ...location, ...{ client: client.id } }));
     console.log(e.target);
     console.log(location);
 

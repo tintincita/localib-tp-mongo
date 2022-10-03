@@ -13,7 +13,7 @@ function LocationForm({ location, setLocation }) {
   return (
     <Card className="mx-auto" style={{ width: "50%" }}>
       <Card.Body>
-        <Card.Title>Edit Location Details</Card.Title>
+        <Card.Title>Location Details</Card.Title>
         <Form>
           <Form.Label>Start Date</Form.Label>
           <Form.Control

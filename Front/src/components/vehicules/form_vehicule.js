@@ -37,7 +37,7 @@ function VehiculeForm({
   return (
     <Card className="mx-auto" style={{ width: "50%" }}>
       <Card.Body>
-        <Card.Title>Vehicule Details</Card.Title>
+        <Card.Title>Edit Vehicule Details</Card.Title>
         <Form onSubmit={handleSubmit}>
           <Form.Label>Marque</Form.Label>
           <Form.Control
@@ -82,26 +82,7 @@ function VehiculeForm({
             value={vehicule.prixJournee}
             onChange={(e) => updateField("prixJournee", e.target.value)}
           />
-{/* 
-          <Form.Select
-            aria-label="Default select example"
-          >
-            <option>Etat</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-          </Form.Select>
-          <Form.Select
-            aria-label="Default select example"
-            value={vehicule.type}
-          >
-            <option>Type</option>
-            <option value="Voiture">Voiture</option>
-            <option value="Camion">Camion</option>
-            <option value="Utilitaire">Utilitaire</option>
-            <option value="Moto">Moto</option>
-          </Form.Select> */}
+
           <div className="d-grid gap-2">
             <Button
               variant="primary"

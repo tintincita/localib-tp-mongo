@@ -30,9 +30,6 @@ const Locations = () => {
       />
       <LocationForm location={location} setLocation={setLocation} />
       
-      <a href="/newLocation">
-      <Button variant="primary">New Location</Button>
-      </a>
     </>
   );
 };
