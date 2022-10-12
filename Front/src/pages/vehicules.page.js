@@ -21,7 +21,6 @@ const Vehicules = () => {
   const [records, setRecords] = useState([]);
 
   const handleVehiculeClick = (record) => {
-    // record.dob = moment(record.dob).format("YYYY-MM-DD");
     setVehicule(record);
   };
 

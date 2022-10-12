@@ -2,6 +2,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import React, { useEffect } from "react";
+import Select from 'react-select';
+
 import { deleteVehicule } from "../../services/vehicules.services";
 
 function VehiculeForm({
@@ -12,7 +14,20 @@ function VehiculeForm({
   setMessage,
   clearForm,
 }) {
-  useEffect(() => {}, [vehicule, setVehicule]);
+  useEffect(() => { }, [vehicule, setVehicule]);
+
+  const optionsEtat = [
+    { value: 'A', label: 'A' },
+    { value: 'B', label: 'B' },
+    { value: 'C', label: 'C' },
+    { value: 'D', label: 'D' }
+  ]
+  const optionsType = [
+    { value: 'Voiture', label: 'Voiture' },
+    { value: 'Camion', label: 'Camion' },
+    { value: 'Utilitaire', label: 'Utilitaire' },
+    { value: 'Moto', label: 'Moto' }
+  ]
 
   const updateField = (field, value) => {
     let updatedField = {};
@@ -34,10 +49,17 @@ function VehiculeForm({
     deleteVehiculeStyle = {};
   }
 
+  const handleEtatSelect = e => {
+    updateField("etat", e.value);
+  };
+  const handleTypeSelect = e => {
+    updateField("type", e.value);
+  };
+
   return (
     <Card className="mx-auto" style={{ width: "50%" }}>
       <Card.Body>
-        <Card.Title>Vehicule Details</Card.Title>
+        <Card.Title>Edit Vehicule Details</Card.Title>
         <Form onSubmit={handleSubmit}>
           <Form.Label>Marque</Form.Label>
           <Form.Control
@@ -62,19 +84,14 @@ function VehiculeForm({
             onChange={(e) => updateField("immatriculation", e.target.value)}
           />
           <Form.Label>Etat</Form.Label>
-          <Form.Control
-            type="text"
-            className="mb-3"
-            value={vehicule.etat}
-            onChange={(e) => updateField("etat", e.target.value)}
-          />
+          <Select options={optionsEtat} value={optionsEtat.filter(function(option) {
+          return option.value === vehicule.etat;
+        })} onChange= {handleEtatSelect}/>
+
           <Form.Label>Type</Form.Label>
-          <Form.Control
-            type="text"
-            className="mb-3"
-            value={vehicule.type}
-            onChange={(e) => updateField("type", e.target.value)}
-          />
+          <Select options={optionsType} value={optionsType.filter(function(option) {
+          return option.value === vehicule.type;
+        })} onChange= {handleTypeSelect}/>
           <Form.Label>Prix Journée</Form.Label>
           <Form.Control
             type="number"
@@ -82,26 +99,7 @@ function VehiculeForm({
             value={vehicule.prixJournee}
             onChange={(e) => updateField("prixJournee", e.target.value)}
           />
-{/* 
-          <Form.Select
-            aria-label="Default select example"
-          >
-            <option>Etat</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-          </Form.Select>
-          <Form.Select
-            aria-label="Default select example"
-            value={vehicule.type}
-          >
-            <option>Type</option>
-            <option value="Voiture">Voiture</option>
-            <option value="Camion">Camion</option>
-            <option value="Utilitaire">Utilitaire</option>
-            <option value="Moto">Moto</option>
-          </Form.Select> */}
+
           <div className="d-grid gap-2">
             <Button
               variant="primary"

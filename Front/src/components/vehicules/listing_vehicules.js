@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 
-import CONFIG from "../../config/config.json";
 import { getVehicules } from "../../services/vehicules.services";
 
 const ListingVehicules = ({records, setRecords, handleVehiculeClick}) => {

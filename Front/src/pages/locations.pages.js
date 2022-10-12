@@ -3,7 +3,6 @@ import moment from "moment";
 
 import LocationForm from "../components/locations/form_location";
 import ListingLocations from "../components/locations/listing_locations";
-import Button from "react-bootstrap/esm/Button";
 
 const Locations = () => {
   const [records, setRecords] = useState([]);
@@ -30,9 +29,6 @@ const Locations = () => {
       />
       <LocationForm location={location} setLocation={setLocation} />
       
-      <a href="/newLocation">
-      <Button variant="primary">New Location</Button>
-      </a>
     </>
   );
 };
