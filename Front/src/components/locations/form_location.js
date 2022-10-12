@@ -11,9 +11,13 @@ function LocationForm({ location, setLocation }) {
     setLocation((location) => ({ ...location, ...updatedField }));
   };
 
+  let locationLoadedStyle = { display: "none" }
+  if (location.id) {
+    locationLoadedStyle = {}
+  }
+
   return (
-    <><h1>Location Details</h1>
-      <CardGroup >
+    <div style={locationLoadedStyle}><h1>Location Details</h1>
         <Card className="mx-auto">
           <Card.Body>
             <Card.Header>CLIENT</Card.Header>
@@ -22,6 +26,7 @@ function LocationForm({ location, setLocation }) {
               <ListGroup.Item>Date of Birth: {location.client.dob}</ListGroup.Item>
               <ListGroup.Item>eMail: {location.client.email}</ListGroup.Item>
               <ListGroup.Item>phone: {location.client.phone}</ListGroup.Item>
+              <ListGroup.Item></ListGroup.Item>
             </ListGroup>
           </Card.Body>
         </Card>
@@ -33,10 +38,19 @@ function LocationForm({ location, setLocation }) {
             <ListGroup.Item>Immatriculation: {location.vehicule.immatriculation}</ListGroup.Item>
             <ListGroup.Item>Etat: {location.vehicule.etat}</ListGroup.Item>
             <ListGroup.Item>Type: {location.vehicule.type}</ListGroup.Item>
+            <ListGroup.Item>Prix Journée: {location.vehicule.prixJournee}</ListGroup.Item>
           </ListGroup>
         </Card>
-      </CardGroup>
-    </>
+        <Card>
+          <Card.Header>LOCATION</Card.Header>
+          <ListGroup className="list-group-flush">
+            <ListGroup.Item>Start Date: {location.startDate}</ListGroup.Item>
+            <ListGroup.Item>End Date: {location.endDate}</ListGroup.Item>
+            <ListGroup.Item>Prix Total: {location.prixTotal}</ListGroup.Item>
+          </ListGroup>
+        </Card>
+      
+    </div>
   );
 }
 
