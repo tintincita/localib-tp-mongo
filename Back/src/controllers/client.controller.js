@@ -1,61 +1,81 @@
 const Client = require('../models/client.model')
 
 module.exports.getAllClients = async (request, response) => {
-    const clients = await Client.find({});
-    response.json(clients)
+    try {
+        const clients = await Client.find({});
+        response.json(clients)
+    } catch (error) {
+        response.status(400).send(error);
+    }
 }
 
 module.exports.getClientByID = async (request, response) => {
-    const client = await Client.findById(request.params.id);
+    try {
+        const client = await Client.findById(request.params.id);
 
-    client
-        ? response.json(client)
-        : response.status(404).end()
+        client
+            ? response.json(client)
+            : response.status(404).end()
+    } catch (error) {
+        response.status(400).send(error);
+    }
 }
 
 module.exports.createClient = async (request, response) => {
-    const { fullName, dob, email, phone } = request.body
-    console.log(request.body)
+    try {
+        const { fullName, dob, email, phone } = request.body
+        console.log(request.body)
 
-    const newClient = new Client({
-        fullName: fullName,
-        dob: dob,
-        email: email,
-        phone: phone
-    })
+        const newClient = new Client({
+            fullName: fullName,
+            dob: dob,
+            email: email,
+            phone: phone
+        })
 
-    const savedClient = await newClient.save();
+        const savedClient = await newClient.save();
 
-    savedClient
-        ? response.json(savedClient)
-        : response.status(400).end()
+        savedClient
+            ? response.json(savedClient)
+            : response.status(400).end()
+    } catch (error) {
+        response.status(400).send(error);
+    }
 
 }
 
 module.exports.updateClientByID = async (request, response) => {
-    const body = request.body;
+    try {
+        const body = request.body;
 
-    const client = {
-        fullName: body.fullName,
-        dob: body.dob,
-        email: body.email,
-        phone: body.phone,
+        const client = {
+            fullName: body.fullName,
+            dob: body.dob,
+            email: body.email,
+            phone: body.phone,
+        }
+
+        const updatedClient = await Client.findByIdAndUpdate(request.params.id, client, { new: true })
+        updatedClient
+            ? response.json(updatedClient)
+            : response.status(400).end()
+    } catch (error) {
+        response.status(400).send(error);
     }
-
-    const updatedClient = await Client.findByIdAndUpdate(request.params.id, client, { new: true })
-    updatedClient
-        ? response.json(updatedClient)
-        : response.status(400).end()
 }
 
 module.exports.deleteClientByID = async (request, response) => {
-    const target = request.params.id
-    const clientToDelete = await Client.findById(target)
+    try {
+        const target = request.params.id
+        const clientToDelete = await Client.findById(target)
 
-    if (clientToDelete) {
-        await Client.findByIdAndDelete(target)
-        response.status(204).send(`Client deleted : ${clientToDelete.fullName}`);
-    } else {
-        response.status(400).end()
+        if (clientToDelete) {
+            await Client.findByIdAndDelete(target)
+            response.status(204).send(`Client deleted : ${clientToDelete.fullName}`);
+        } else {
+            response.status(400).end()
+        }
+    } catch (error) {
+        response.status(400).send(error);
     }
 }
