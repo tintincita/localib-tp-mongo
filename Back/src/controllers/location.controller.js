@@ -3,23 +3,31 @@ const Vehicule = require('../models/vehicule.model')
 
 
 module.exports.getAllLocations = async (request, response) => {
-    const locations = await Location.find({}).populate("vehicule").populate("client");
-    response.json(locations);
+    try {
+        const locations = await Location.find({}).populate("vehicule").populate("client");
+        response.json(locations);
+    } catch (error) {
+        response.status(400).send(error);
+    }
 }
 
 module.exports.getLocationByID = async (request, response) => {
-    const location = await Location.findById(request.params.id).populate("vehicule").populate("client");
+    try {
+        const location = await Location.findById(request.params.id).populate("vehicule").populate("client");
 
-    location
-        ? response.json(location)
-        : response.status(404).end()
+        location
+            ? response.json(location)
+            : response.status(404).end()
+    } catch (error) {
+        response.status(400).send(error);
+    }
 }
 
 
 module.exports.createLocation = async (request, response) => {
-    const { startDate, endDate, vehicule, client } = request.body;
-
     try {
+        const { startDate, endDate, vehicule, client } = request.body;
+
         const vehiculeToRent = await Vehicule.findById(vehicule)
 
         const prixTotal = checkDatesAndReturnPrixTotal(startDate, endDate, vehiculeToRent)
@@ -37,14 +45,16 @@ module.exports.createLocation = async (request, response) => {
 
         response.json(savedLocation)
 
-    } catch (err) { throw err }
+    } catch (error) {
+        response.status(400).send(error);
+    }
 }
 
 module.exports.updateLocationByID = async (request, response) => {
-    const target = request.params.id
-    const { startDate, endDate, vehicule, client } = request.body;
-
     try {
+        const target = request.params.id
+        const { startDate, endDate, vehicule, client } = request.body;
+
         const oldLocation = await Location.findById(target)
         const vehiculeID = oldLocation.vehicule.toString();
 
@@ -80,21 +90,27 @@ module.exports.updateLocationByID = async (request, response) => {
         const updatedLocation = await Location.findByIdAndUpdate(target, newLocation, { new: true })
         response.json(updatedLocation)
 
-    } catch (err) { throw err }
+    } catch (error) {
+        response.status(400).send(error);
+    }
 }
 
 
 module.exports.deleteLocationByID = async (request, response) => {
-    const target = request.params.id
-    const locationToDelete = await Location.findById(target)
+    try {
+        const target = request.params.id
+        const locationToDelete = await Location.findById(target)
 
-    // check if vehicle disponibility affected and update
+        // check if vehicle disponibility affected and update
 
-    if (locationToDelete) {
-        await Location.findByIdAndDelete(target)
-        response.status(204).send(`Location deleted : ${target}`);
-    } else {
-        response.status(400).end()
+        if (locationToDelete) {
+            await Location.findByIdAndDelete(target)
+            response.status(204).send(`Location deleted : ${target}`);
+        } else {
+            response.status(400).end()
+        }
+    } catch (error) {
+        response.status(400).send(error);
     }
 }
 
@@ -118,9 +134,18 @@ const checkDatesAndReturnPrixTotal = (startDate, endDate, vehiculeToRent) => {
 }
 
 const addLocationToVehicule = (locationID, vehiculeID) => {
-    return Vehicule.findByIdAndUpdate(vehiculeID, { $addToSet: { locations: locationID } })
+    try {
+        return Vehicule.findByIdAndUpdate(vehiculeID, { $addToSet: { locations: locationID } })
+    } catch (error) {
+        response.status(400).send(error);
+    }
 }
 
+
 const removeLocationFromVehicule = (locationID, vehiculeID) => {
-    return Vehicule.findByIdAndUpdate(vehiculeID, { $pull: { locations: locationID } })
+    try {
+        return Vehicule.findByIdAndUpdate(vehiculeID, { $pull: { locations: locationID } })
+    } catch (error) {
+        response.status(400).send(error);
+    }
 }
